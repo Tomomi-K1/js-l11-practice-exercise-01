@@ -1,16 +1,22 @@
 const randomFolks = document.querySelector(".random-peeps");
-console.log(randomFolks);
+const selectUserNumber = document.querySelector ("select");
+let numUsers = "";
+
+selectUserNumber.addEventListener("change", function (e) {
+    numUsers = e.target.value;
+    getData(numUsers);
+  });
 
 const getData= async function(){
-    const userRequest = await fetch("https://randomuser.me/api?results=5");
-    const data = await userRequest.json();
-    console.log(data);
+    const usersRequest = await fetch(`https://randomuser.me/api?results=${numUsers}`);
+    const data = await usersRequest.json();
+  
     const userResults = data.results;
-    console.log(userResults);
+
     displayUsers (userResults);
 }
 
-getData();
+getData(1);
 
 const displayUsers = function(userResults){
     randomFolks.innerHTML = "";
@@ -28,11 +34,9 @@ const displayUsers = function(userResults){
             <img src = ${imageUrl} alt = "User avatar" />
             `;
         randomFolks.append(userDiv);
-
     };
+};
 
+const dropDownMenu = document.querySelector(".num-users");
+dropDownMenu.classList.remove("hide");
 
-
-    
-
-}
